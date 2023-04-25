@@ -1,6 +1,4 @@
 # Proiecte-PC2
-Repository for Computer Programming 2 @ FMI Unibuc
-
 Contents: One project per Programming Method ( D&I, Greedy, Backtracking, Dynamic Programming )
 
 1. Divide et Impera - Check whether or not a given tree ( in Preorder, with NULL values at dead ends ) is a Binary Search Tree or not in linear time. \
