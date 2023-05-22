@@ -9,3 +9,5 @@ Contents: One project per Programming Method ( D&I, Greedy, Backtracking, Dynami
   -> Create a stack: 1) when no stack exists 2) When the current number is greater than all the stack tops existing. \
   -> If there is a stack where the number fits, pick the one with the smallest top. ( done using a minheap ) \
   -> After the heap was created, start removing the top value of the top-most stack in the heap. Remove the stack and reinsert it to assure correct heap ordering. 
+3. BackTracking - basic RegEx interpretor. Supports: + ? * . \w \t \s \S \W {min,max} [chr1-chr2CHR3-CHR4] and captures.
+![alt text](https://imgur.com/1B24j3x.png)
