@@ -13,6 +13,6 @@ Contents: One project per Programming Method ( D&I, Greedy, Backtracking, Dynami
 ![alt text](https://imgur.com/1B24j3x.png)
 4. Dynamic Programming - TBD
 
-Extras: \
-  > arduino morse code: text to led blinks \
-  > e^x approximation in x64 Assembly (NASM) - TBD
+Extras: 
+  \> arduino morse code: text to led blinks \
+  \> e^x approximation in x64 Assembly (NASM) - TBD
