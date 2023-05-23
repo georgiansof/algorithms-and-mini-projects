@@ -11,7 +11,8 @@ Contents: One project per Programming Method ( D&I, Greedy, Backtracking, Dynami
   -> After the heap was created, start removing the top value of the top-most stack in the heap. Remove the stack and reinsert it to assure correct heap ordering. 
 3. BackTracking - basic RegEx interpretor. Supports: + ? * . \w \t \s \S \W {min,max} [chr1-chr2CHR3-CHR4] ; captures (and captures inside captures recursively).
 ![alt text](https://imgur.com/1B24j3x.png)
-4. Dynamic Programming - TBD
+4. Dynamic Programming - Find max sum of a path that starts anywhere on the first line of a matrix and ends on the last line
+  dp[i][j] = a[i][j] + max(dp[i-1][j-1],dp[i-1][j],dp[i-1][j+1])
 
 Extras: \
   \> arduino morse code: text to led blinks \
