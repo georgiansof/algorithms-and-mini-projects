@@ -48,7 +48,9 @@ int main(int argc, char** argv) {
                 case_insensitive();
 
         cout << "RegEx: " << regex << "\nOccurencies:\n";
-
+        
+        file_contents += ' ';
+        
         int start = 0, end = regex.size();
         for (int i = 0; i < file_contents.size(); ++i) {
             fallback = false;
