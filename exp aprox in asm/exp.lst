@@ -1,0 +1,406 @@
+     1                                  section .data
+     2                                  	;O_WRONLY equ 000001q ; write only
+     3 00000000 000000000000F03F            rezultat dq 1.0
+     4 00000008 0000000000000000            exp dq 0.0
+     5 00000010 577269746520746865-     	prompt_msg db 'Write the x you want to evaluate e^x for ', 0xA
+     5 00000019 207820796F75207761-
+     5 00000022 6E7420746F20657661-
+     5 0000002B 6C7561746520655E78-
+     5 00000034 20666F72200A       
+     6                                  	prompt_msg_len equ $-prompt_msg
+     7 0000003A 496E76616C69642069-     	err_msg db 'Invalid input'
+     7 00000043 6E707574           
+     8                                  	err_msg_len equ $-err_msg
+     9 00000047 0000000000002440        	p dq 10.0
+    10 0000004F 000000000000F0BF        	sign_changer dq -1.0
+    11                                  	;file_name db 'number.txt'
+    12                                  	;file_name_len equ $-file_name
+    13                                  	;fd dq 0
+    14 00000057 9A9999999999B93F        	div10 dq 0.1
+    15                                  	;dbg_msg db 'Debug'
+    16                                  	;dbg_msg_len equ $-dbg_msg
+    17                                  	;dbg_number dq 151.0
+    18 0000005F 0000000000000000        	qdigit dq 0.0
+    19 00000067 000000000000F03F        	unit dq 1.0
+    20 0000006F F168E388B5F8E43E        	eps dq 0.00001
+    21 00000077 0000000000000000        	zero dq 0.0
+    22 0000007F 0000000000000000        	parte_intreaga dq 0
+    23 00000087 0000000000000000        	parte_fractionara dq 0
+    24 0000008F 0000000080842E41        	transf dq 1000000.0
+    25 00000097 0000000000000000        	tms dq 0
+    26 0000009F 2E                      	point db '.'
+    27 000000A0 0A                      	linefeed db 0xA
+    28 000000A1 54686520726573756C-     	result_msg db 'The result is '
+    28 000000AA 7420697320         
+    29                                  	result_msg_len equ $-result_msg
+    30                                  
+    31                                  section .text
+    32                                  global main
+    33                                  
+    34                                  main:
+    35 00000000 55                          push rbp
+    36 00000001 4889E5                      mov rbp, rsp
+    37                                  
+    38 00000004 4831DB                  	xor rbx,rbx
+    39 00000007 48891C25[01000000]      	mov [flags], rbx
+    40                                  	
+    41                                  	;mov rbx, __?float64?__(1.0)
+    42                                  	;mov [pow], rbx
+    43                                  
+    44 0000000F E8EA010000              	call show_prompt
+    45 00000014 E806020000              	call read_number
+    46 00000019 E807000000              	call exp_approx
+    47 0000001E E86D000000              	call show_number
+    48                                  	;call print_number_to_stdout
+    49                                  
+    50 00000023 C9                      	leave
+    51 00000024 C3                      	ret
+    52                                  
+    53                                  exp_approx:
+    54 00000025 55                      	push rbp
+    55 00000026 4889E5                  	mov rbp,rsp
+    56                                  
+    57 00000029 F20F100425-             	movsd xmm0, [rezultat]
+    57 0000002E [00000000]         
+    58 00000032 F20F100C25-             	movsd xmm1, [unit]
+    58 00000037 [67000000]         
+    59 0000003B F20F101425-             	movsd xmm2, [unit]
+    59 00000040 [67000000]         
+    60 00000044 F2440F103C25-           	movsd xmm15, [eps]
+    60 0000004A [6F000000]         
+    61                                  
+    62                                  	loop2:
+    63                                  		; rezultat += rezultat * exp / k
+    64 0000004E F20F590C25-             		mulsd xmm1, [exp]
+    64 00000053 [08000000]         
+    65 00000057 F20F5ECA                		divsd xmm1, xmm2
+    66 0000005B F2440F10F1              		movsd xmm14, xmm1
+    67 00000060 F2440F5C3425-           		subsd xmm14, [eps]
+    67 00000066 [6F000000]         
+    68 0000006A 66440F2E3425-           		ucomisd xmm14, [zero]
+    68 00000070 [77000000]         
+    69 00000074 760F                    		jbe exit_loop2
+    70                                  
+    71 00000076 F20F58C1                		addsd xmm0, xmm1
+    72 0000007A F20F581425-             		addsd xmm2, [unit]
+    72 0000007F [67000000]         
+    73 00000083 EBC9                    		jmp loop2
+    74                                  
+    75                                  	exit_loop2:
+    76 00000085 F20F110425-             	movsd [rezultat], xmm0
+    76 0000008A [00000000]         
+    77                                  
+    78 0000008E C9                      	leave
+    79 0000008F C3                      	ret
+    80                                  
+    81                                  show_number:
+    82 00000090 55                      	push rbp
+    83 00000091 4889E5                  	mov rbp,rsp
+    84                                  
+    85 00000094 F20F100425-             	movsd xmm0, [rezultat]
+    85 00000099 [00000000]         
+    86 0000009D F2480F2CD8              	cvttsd2si rbx, xmm0
+    87 000000A2 48891C25[7F000000]      	mov [parte_intreaga], rbx
+    88 000000AA F2480F2ACB              	cvtsi2sd xmm1, rbx
+    89 000000AF F20F5CC1                	subsd xmm0, xmm1
+    90 000000B3 F20F110425-             	movsd [p], xmm0
+    90 000000B8 [47000000]         
+    91                                  	
+    92 000000BC F20F590425-             	mulsd xmm0, [transf]
+    92 000000C1 [8F000000]         
+    93 000000C5 4831DB                  	xor rbx,rbx
+    94 000000C8 F2480F2CD8              	cvttsd2si rbx, xmm0
+    95 000000CD 48891C25[87000000]      	mov [parte_fractionara], rbx
+    96                                  
+    97 000000D5 B801000000              	mov rax, 1
+    98 000000DA BF01000000              	mov rdi, 1
+    99 000000DF 48BE-                   	mov rsi, result_msg
+    99 000000E1 [A100000000000000] 
+   100 000000E9 BA0E000000              	mov rdx, result_msg_len
+   101 000000EE 0F05                    	syscall
+   102                                  
+   103 000000F0 4831D2                  	xor rdx,rdx
+   104 000000F3 4831C0                  	xor rax,rax
+   105 000000F6 4D31C9                  	xor r9,r9
+   106 000000F9 4D31C0                  	xor r8,r8
+   107 000000FC 488B0425[7F000000]      	mov rax, [parte_intreaga]
+   108 00000104 41B90A000000            	mov r9, qword 10
+   109                                  	int_loop:
+   110 0000010A 49F7F1                  		div r9
+   111                                  		;mov [parte_intreaga], rax
+   112 0000010D 52                      		push rdx
+   113 0000010E 4831D2                  		xor rdx,rdx
+   114 00000111 49FFC0                  		inc r8
+   115 00000114 4C890425[97000000]      		mov [tms], r8
+   116 0000011C 4883F800                		cmp rax, qword 0
+   117 00000120 7402                    		je exit_int_loop
+   118 00000122 EBE6                    		jmp int_loop
+   119                                  
+   120                                  	exit_int_loop:
+   121                                  
+   122 00000124 488B0C25[97000000]      	mov rcx, [tms]
+   123                                  	for_int_loop:
+   124 0000012C 5A                      		pop rdx
+   125 0000012D 4883C230                		add rdx, '0'
+   126 00000131 48891425[5F000000]      		mov [qdigit], rdx
+   127                                  
+   128 00000139 B801000000              		mov rax, 1
+   129 0000013E BF01000000              		mov rdi, 1
+   130 00000143 48BE-                   		mov rsi, qdigit
+   130 00000145 [5F00000000000000] 
+   131 0000014D BA01000000              		mov rdx, 1
+   132 00000152 51                      		push rcx
+   133 00000153 0F05                    		syscall
+   134 00000155 59                      		pop rcx
+   135 00000156 48FFC9                  		dec rcx
+   136 00000159 75D1                    		jnz for_int_loop
+   137                                  
+   138 0000015B B801000000              	mov rax,1
+   139 00000160 BF01000000              	mov rdi,1
+   140 00000165 48BE-                   	mov rsi, point
+   140 00000167 [9F00000000000000] 
+   141 0000016F BA01000000              	mov rdx, 1
+   142 00000174 0F05                    	syscall
+   143                                  
+   144 00000176 4831D2                  	xor rdx,rdx
+   145 00000179 4831C0                  	xor rax,rax
+   146 0000017C 4D31C9                  	xor r9,r9
+   147 0000017F 4D31C0                  	xor r8,r8
+   148 00000182 488B0425[87000000]      	mov rax, [parte_fractionara]
+   149 0000018A 41B90A000000            	mov r9, qword 10
+   150                                  	fract_loop:
+   151 00000190 49F7F1                  		div r9
+   152                                  		;mov [parte_intreaga], rax
+   153 00000193 52                      		push rdx
+   154 00000194 4831D2                  		xor rdx,rdx
+   155 00000197 49FFC0                  		inc r8
+   156 0000019A 4C890425[97000000]      		mov [tms], r8
+   157 000001A2 4883F800                		cmp rax, qword 0
+   158 000001A6 7402                    		je exit_fract_loop
+   159 000001A8 EBE6                    		jmp fract_loop
+   160                                  
+   161                                  	exit_fract_loop:
+   162                                  
+   163 000001AA 488B0C25[97000000]      	mov rcx, [tms]
+   164                                  	for_fract_loop:
+   165 000001B2 5A                      		pop rdx
+   166 000001B3 4883C230                		add rdx, '0'
+   167 000001B7 48891425[5F000000]      		mov [qdigit], rdx
+   168                                  
+   169 000001BF B801000000              		mov rax, 1
+   170 000001C4 BF01000000              		mov rdi, 1
+   171 000001C9 48BE-                   		mov rsi, qdigit
+   171 000001CB [5F00000000000000] 
+   172 000001D3 BA01000000              		mov rdx, 1
+   173 000001D8 51                      		push rcx
+   174 000001D9 0F05                    		syscall
+   175 000001DB 59                      		pop rcx
+   176 000001DC 48FFC9                  		dec rcx
+   177 000001DF 75D1                    		jnz for_fract_loop
+   178                                  
+   179 000001E1 B801000000              	mov rax, 1
+   180 000001E6 BF01000000              	mov rdi, 1
+   181 000001EB 48BE-                   	mov rsi, linefeed
+   181 000001ED [A000000000000000] 
+   182 000001F5 BA01000000              	mov rdx, 1
+   183 000001FA 0F05                    	syscall
+   184                                  
+   185 000001FC C9                      	leave
+   186 000001FD C3                      	ret
+   187                                  
+   188                                  show_prompt:
+   189 000001FE 55                      	push rbp
+   190 000001FF 4889E5                  	mov rbp, rsp
+   191                                  
+   192 00000202 B801000000              	mov rax, 1 ; prompt messsage
+   193 00000207 BF01000000              	mov rdi, 1
+   194 0000020C 48BE-                   	mov rsi, prompt_msg
+   194 0000020E [1000000000000000] 
+   195 00000216 BA2A000000              	mov rdx, prompt_msg_len
+   196 0000021B 0F05                    	syscall
+   197                                  
+   198 0000021D C9                      	leave
+   199 0000021E C3                      	ret
+   200                                  
+   201                                  read_number:
+   202 0000021F 55                      	push rbp
+   203 00000220 4889E5                  	mov rbp, rsp
+   204                                  
+   205                                  	loop1:
+   206 00000223 B800000000              		mov rax, 0
+   207 00000228 BF00000000              		mov rdi, 0
+   208 0000022D 48BE-                   		mov rsi, digit
+   208 0000022F [0000000000000000] 
+   209 00000237 BA01000000              		mov rdx, 1
+   210 0000023C 0F05                    		syscall
+   211                                  
+   212 0000023E 803C25[00000000]20      		cmp [digit], byte ' ' ; done
+   213 00000246 74DB                    		je loop1
+   214                                  
+   215 00000248 803C25[00000000]2D      		cmp [digit], byte '-' ; done
+   216 00000250 752D                    		jne not_minus_sign
+   217                                  		; minus sign
+   218 00000252 480FB61C25-             		movzx rbx, byte [flags]
+   218 00000257 [01000000]         
+   219 0000025B 48F7C302000000          		test rbx, 0x2
+   220 00000262 0F8542010000            		jnz error
+   221 00000268 480FB61C25-             		movzx rbx, byte [flags]
+   221 0000026D [01000000]         
+   222 00000271 4883CB02                		OR rbx, qword 0x2
+   223 00000275 48891C25[01000000]      		mov [flags], rbx
+   224 0000027D EBA4                    		jmp loop1
+   225                                  
+   226                                  		not_minus_sign:
+   227                                  
+   228 0000027F 803C25[00000000]30      		cmp [digit], byte '0'
+   229 00000287 0F8CCB000000            		jl not_digit
+   230 0000028D 803C25[00000000]39      		cmp [digit], byte '9' 
+   231 00000295 0F8FBD000000            		jg not_digit
+   232                                  		; digit
+   233                                  		
+   234 0000029B 480FB61C25-             		movzx rbx, byte [flags]
+   234 000002A0 [01000000]         
+   235 000002A4 48F7C301000000          		test rbx, 0x1
+   236 000002AB 7546                    		jnz decimal_part
+   237                                  		
+   238                                  		; integral part
+   239                                  		
+   240 000002AD F20F100425-             		movsd xmm0, [exp]
+   240 000002B2 [08000000]         
+   241 000002B6 F20F590425-             		mulsd xmm0, [p]
+   241 000002BB [47000000]         
+   242 000002BF 802C25[00000000]30      		sub [digit], byte '0'
+   243                                  		
+   244 000002C7 480FB61C25-             		movzx rbx, byte [digit]
+   244 000002CC [00000000]         
+   245 000002D0 48891C25[5F000000]      		mov [qdigit], rbx
+   246 000002D8 F20F2A0C25-             		cvtsi2sd xmm1, [qdigit]
+   246 000002DD [5F000000]         
+   247                                   
+   248 000002E1 F20F58C1                		addsd xmm0, xmm1
+   249 000002E5 F20F110425-             		movsd [exp],xmm0
+   249 000002EA [08000000]         
+   250                                  
+   251 000002EE E930FFFFFF              		jmp loop1
+   252                                  
+   253                                  		decimal_part:
+   254                                  
+   255 000002F3 F20F100425-             		movsd xmm0, [exp]
+   255 000002F8 [08000000]         
+   256 000002FC 802C25[00000000]30      		sub [digit], byte '0'
+   257 00000304 480FB61C25-             		movzx rbx, byte [digit]
+   257 00000309 [00000000]         
+   258 0000030D 48891C25[5F000000]      		mov [qdigit], rbx
+   259 00000315 F20F2A0C25-             		cvtsi2sd xmm1, [qdigit]
+   259 0000031A [5F000000]         
+   260                                  		;movsd xmm1, [digit]
+   261 0000031E F20F590C25-             		mulsd xmm1, [p]
+   261 00000323 [47000000]         
+   262 00000327 F20F58C1                		addsd xmm0, xmm1
+   263 0000032B F20F110425-             		movsd [exp], xmm0
+   263 00000330 [08000000]         
+   264                                  
+   265 00000334 F20F101425-             		movsd xmm2, [p]
+   265 00000339 [47000000]         
+   266 0000033D F20F100C25-             		movsd xmm1, [div10]
+   266 00000342 [57000000]         
+   267 00000346 F20F59D1                		mulsd xmm2, xmm1
+   268 0000034A F20F111425-             		movsd [p], xmm2
+   268 0000034F [47000000]         
+   269 00000353 E9CBFEFFFF              		jmp loop1
+   270                                  
+   271                                  		not_digit:
+   272 00000358 803C25[00000000]2E      		cmp [digit], byte '.' ; done
+   273 00000360 753E                    		jne not_decimal_mark
+   274                                  		; decimal_mark
+   275 00000362 480FB61C25-             		movzx rbx, byte [flags]
+   275 00000367 [01000000]         
+   276 0000036B 48F7C301000000          		test rbx, 0x1
+   277 00000372 7536                    		jnz error
+   278 00000374 480FB61C25-             		movzx rbx, byte [flags]
+   278 00000379 [01000000]         
+   279 0000037D 4883CB01                		OR rbx, 0x1
+   280 00000381 48891C25[01000000]      		mov [flags], rbx
+   281                                  		;mov rbx, __?float64?__(0.1)
+   282                                  		;mov [pow], rbx
+   283 00000389 F30F7E0425-             		movq xmm0, [div10]
+   283 0000038E [57000000]         
+   284 00000392 F20F110425-             		movsd [p], xmm0
+   284 00000397 [47000000]         
+   285 0000039B E983FEFFFF              		jmp loop1
+   286                                  
+   287                                  		not_decimal_mark: 
+   288 000003A0 803C25[00000000]0A      		cmp [digit], byte 0xA ; done
+   289 000003A8 7427                    		je exit_loop
+   290                                  		; is endline
+   291                                  		; invalid input
+   292                                  
+   293                                  		error:
+   294 000003AA B801000000              		mov rax, 1
+   295 000003AF BF00000000              		mov rdi, 0
+   296 000003B4 48BE-                   		mov rsi, err_msg
+   296 000003B6 [3A00000000000000] 
+   297 000003BE BA0D000000              		mov rdx, err_msg_len
+   298 000003C3 0F05                    		syscall
+   299                                  
+   300 000003C5 B83C000000              		mov rax, 60
+   301 000003CA BF01000000              		mov rdi, 1
+   302 000003CF 0F05                    		syscall
+   303                                  
+   304                                  	exit_loop:
+   305                                  
+   306 000003D1 480FB61C25-             	movzx rbx, byte [flags]
+   306 000003D6 [01000000]         
+   307 000003DA 48F7C302000000          	test rbx, 0x2
+   308 000003E1 741F                    	jz return
+   309                                  
+   310 000003E3 F20F100425-             	movsd xmm0, [exp]
+   310 000003E8 [08000000]         
+   311 000003EC F20F100C25-             	movsd xmm1, [sign_changer]
+   311 000003F1 [4F000000]         
+   312 000003F5 F20F59C1                	mulsd xmm0, xmm1  
+   313 000003F9 F20F110425-             	movsd [exp], xmm0 
+   313 000003FE [08000000]         
+   314                                  	
+   315                                  
+   316                                  	return:
+   317 00000402 C9                      	leave
+   318 00000403 C3                      	ret
+   319                                  
+   320                                  ;print_number_to_file:
+   321                                  ;	push rbp
+   322                                  ;	mov rbp, rsp
+   323                                  ;
+   324                                  ;	mov rax, 2
+   325                                  ;	mov rdi, file_name
+   326                                  ;	mov rsi, O_WRONLY
+   327                                  ;	syscall
+   328                                  ;	mov [fd], rax
+   329                                  ;
+   330                                  ;
+   331                                  ;	mov rax, 1 
+   332                                  ;	mov rdi, [fd]
+   333                                  ;	mov rsi, exp
+   334                                  ;	mov rdx, 8
+   335                                  ;	syscall
+   336                                  ;
+   337                                  ;	leave
+   338                                  ;	ret
+   339                                  
+   340                                  ;show_debug_message:
+   341                                  ;	push rbp
+   342                                  ;	mov rbp, rsp
+   343                                  ;
+   344                                  ;	mov rax, 1 
+   345                                  ;	mov rdi, 1
+   346                                  ;	mov rsi, dbg_msg
+   347                                  ;	mov rdx, dbg_msg_len
+   348                                  ;	syscall
+   349                                  ;
+   350                                  ;	leave
+   351                                  ;	ret
+   352                                  
+   353                                  section .bss
+   354 00000000 ??                      	digit resb 1
+   355 00000001 ??                      	flags resb 1 ; bit 0 -> decimal part activated, bit 1 -> sign switched
+   356                                  	;pow resq 1
