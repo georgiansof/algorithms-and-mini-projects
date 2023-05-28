@@ -19,5 +19,5 @@ Extras: \
   \> e^x approximation in x64 Assembly (NASM) \ 
   \> physics plotting and tables in Python \
   \> arduino : \
-  morse code: text to led blinks \
-  magnetic card door lock
+  - morse code: text to led blinks \
+  - magnetic card door lock
