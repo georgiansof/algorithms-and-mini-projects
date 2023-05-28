@@ -16,5 +16,7 @@ Contents: One project per Programming Method ( D&I, Greedy, Backtracking, Dynami
   dp[i][j] = a[i][j] + max(dp[i-1][j-1],dp[i-1][j],dp[i-1][j+1])
 
 Extras: \
-  \> arduino morse code: text to led blinks \
   \> e^x approximation in x64 Assembly (NASM) 
+  \> physics plotting and tables in Python
+  \> arduino : \>morse code: text to led blinks \
+               \> magnetic card door lock
