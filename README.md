@@ -18,5 +18,6 @@ Contents: One project per Programming Method ( D&I, Greedy, Backtracking, Dynami
 Extras: \
   \> e^x approximation in x64 Assembly (NASM) \ 
   \> physics plotting and tables in Python \
-  \> arduino : \>morse code: text to led blinks \
-               \> magnetic card door lock
+  \> arduino : 
+  morse code: text to led blinks \
+  magnetic card door lock
