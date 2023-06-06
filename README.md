@@ -20,4 +20,4 @@ Extras: \
   \> physics plotting and tables in Python \
   \> arduino : 
   - morse code: text to led blinks 
-  - magnetic card door lock
+  - magnetic card lock
