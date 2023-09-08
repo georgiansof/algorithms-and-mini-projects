@@ -1,5 +1,4 @@
-# Proiecte-PC2
-Contents: One project per Programming Method ( D&I, Greedy, Backtracking, Dynamic Programming )
+Contents: One project per Programming Method ( D&I, Greedy, Backtracking, Dynamic Programming ) and other mini-projects
 
 1. Divide et Impera - Check whether or not a given tree ( in Preorder, with NULL values at dead ends ) is a Binary Search Tree or not in linear time. \
   -> The tree is read from the file and parsed by a recursive function that dynamically allocates memory for each node. \
@@ -21,3 +20,4 @@ Extras: \
   \> arduino : 
   - morse code: text to led blinks 
   - magnetic card lock
+  - public transport pathfinding (details in readme inside folder)
