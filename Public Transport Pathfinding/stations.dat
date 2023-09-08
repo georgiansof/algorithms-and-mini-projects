@@ -1,0 +1,28 @@
+///"statie1" "statie2" travel_time cost
+
+"Grozavesti" "Petrache Poenaru" 3 3
+"Petrache Poenaru" "Grozavesti" 3 3
+"Grozavesti" "Eroilor" 3 3
+"Eroilor" "Grozavesti" 3 3
+"Eroilor" "Izvor" 3 3
+"Izvor" "Eroilor" 3 3
+"Izvor" "Piata Unirii" 3 3
+"Piata Unirii" "Izvor" 3 3
+"Piata Unirii" "Universitate" 3 3
+"Universitate" "Piata Unirii" 3 3
+"Crangasi" "Petrache Poenaru" 3 3
+"Petrache Poenaru" "Crangasi" 3 3
+"Crangasi" "Basarab" 3 3
+"Basarab" "Crangasi" 3 3
+"Basarab" "Gara de Nord" 3 3
+"Gara de Nord" "Basarab" 3 3
+"Gara de Nord" "Piata Victoriei" 3 3
+"Piata Victoriei" "Gara de Nord" 3 3
+
+"Piata Victoriei" "Piata Romana" 3 3
+"Piata Romana" "Piata Victoriei" 3 3
+"Piata Romana" "Universitate" 3 3
+"Universitate" "Piata Romana" 3 3
+
+"Eroilor" "Universitate" 5 5
+"Universitate" "Eroilor" 5 5
