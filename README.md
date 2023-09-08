@@ -18,6 +18,6 @@ Extras: \
   \> e^x approximation in x64 Assembly (NASM without stdclib) \
   \> physics plotting and tables in Python \
   \> arduino : 
-  - morse code: text to led blinks 
-  - magnetic card lock
+  - morse code: text to led blinks \
+  - magnetic card lock \
   \> public transport pathfinding (details in readme inside folder)
