@@ -17,7 +17,7 @@ Contents: One project per Programming Method ( D&I, Greedy, Backtracking, Dynami
 Extras: \
   \> e^x approximation in x64 Assembly (NASM without stdclib) \
   \> physics plotting and tables in Python \
+  \> public transport pathfinding (details in readme inside folder) \
   \> arduino : 
-  - morse code: text to led blinks \
-  - magnetic card lock \
-  \> public transport pathfinding (details in readme inside folder)
+  - morse code: text to led blinks 
+  - magnetic card lock 
