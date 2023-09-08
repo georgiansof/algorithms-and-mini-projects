@@ -20,4 +20,4 @@ Extras: \
   \> arduino : 
   - morse code: text to led blinks 
   - magnetic card lock
-  - public transport pathfinding (details in readme inside folder)
+  \> public transport pathfinding (details in readme inside folder)
