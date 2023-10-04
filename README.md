@@ -1,4 +1,4 @@
-Contents: One project per Programming Method ( D&I, Greedy, Backtracking, Dynamic Programming ) and other mini-projects
+Contents: One project per Programming Method ( D&I, Greedy, Backtracking, Dynamic Programming ) and other projects
 
 1. Divide et Impera - Check whether or not a given tree ( in Preorder, with NULL values at dead ends ) is a Binary Search Tree or not in linear time. \
   -> The tree is read from the file and parsed by a recursive function that dynamically allocates memory for each node. \
