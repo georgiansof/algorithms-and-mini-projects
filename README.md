@@ -18,6 +18,7 @@ Extras: \
   \> e^x approximation in x64 Assembly (NASM without stdclib) \
   \> physics plotting and tables in Python \
   \> public transport pathfinding (details in readme inside folder) \
+  \> coalesced hashing with cellar \
   \> arduino : 
   - morse code: text to led blinks 
   - magnetic card lock 
