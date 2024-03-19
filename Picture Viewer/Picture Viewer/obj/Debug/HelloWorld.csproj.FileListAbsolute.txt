@@ -1,0 +1,10 @@
+C:\Users\je_gi\Desktop\Code\lab mds\HelloWorld\HelloWorld\bin\Debug\HelloWorld.exe.config
+C:\Users\je_gi\Desktop\Code\lab mds\HelloWorld\HelloWorld\bin\Debug\HelloWorld.exe
+C:\Users\je_gi\Desktop\Code\lab mds\HelloWorld\HelloWorld\bin\Debug\HelloWorld.pdb
+C:\Users\je_gi\Desktop\Code\lab mds\HelloWorld\HelloWorld\obj\Debug\HelloWorld.csproj.AssemblyReference.cache
+C:\Users\je_gi\Desktop\Code\lab mds\HelloWorld\HelloWorld\obj\Debug\HelloWorld.Properties.Resources.resources
+C:\Users\je_gi\Desktop\Code\lab mds\HelloWorld\HelloWorld\obj\Debug\HelloWorld.csproj.GenerateResource.cache
+C:\Users\je_gi\Desktop\Code\lab mds\HelloWorld\HelloWorld\obj\Debug\HelloWorld.csproj.CoreCompileInputs.cache
+C:\Users\je_gi\Desktop\Code\lab mds\HelloWorld\HelloWorld\obj\Debug\HelloWorld.exe
+C:\Users\je_gi\Desktop\Code\lab mds\HelloWorld\HelloWorld\obj\Debug\HelloWorld.pdb
+C:\Users\je_gi\Desktop\Code\lab mds\HelloWorld\HelloWorld\obj\Debug\HelloWorld.PictureViewer.resources

@@ -19,6 +19,7 @@ Extras: \
   \> physics plotting and tables in Python \
   \> public transport pathfinding (details in readme inside folder) \
   \> coalesced hashing with cellar \
+  \> windows forms .net picture viewer app \
   \> arduino : 
   - morse code: text to led blinks 
   - magnetic card lock 
