@@ -23,6 +23,7 @@ Extras: \
   \> verilog :
   - 4 bit full adder
   - 4 bit mux
+  \
   \> arduino : 
   - morse code: text to led blinks 
   - magnetic card lock 
