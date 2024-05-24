@@ -17,6 +17,7 @@ Contents: One project per Programming Method ( D&I, Greedy, Backtracking, Dynami
 Extras: \
   \> bulk image resizer in Python: resizes all images in current folder to desired size and outputs them in a folder named "output" \
   \> e^x approximation in x64 Assembly (NASM without stdclib) \
+  \> cos(x) approximation in x64 Assembly (NASM with stdclib) \
   \> physics plotting and tables in Python \
   \> public transport pathfinding (details in readme inside folder) \
   \> coalesced hashing with cellar \
