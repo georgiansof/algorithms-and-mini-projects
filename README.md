@@ -16,7 +16,7 @@ Contents: One project per Programming Method ( D&I, Greedy, Backtracking, Dynami
 
 Extras: \
   \> bulk image resizer in Python: resizes all images in current folder to desired size and outputs them in a folder named "output" \
-  \> Probability & Statistics problem in R: simulating city transport profitability in various situations \
+  \> Probability & Statistics problem in R: simulating city public transport profitability in various situations \
   \> e^x approximation in x64 Assembly (NASM without stdclib) \
   \> cos(x) approximation in x64 Assembly (NASM with stdclib) \
   \> physics plotting and tables in Python \
