@@ -1,0 +1,49 @@
+Despre linia 501 STB se cunosc următoarele:
+
+-ȋn medie călătoresc 512 călători pe zi (medie raportată la datele dintr-o luna pentru un
+singur tramvai)
+-numărul minim ȋnregistrat ȋn perioada studiată este de 210 călători pe zi iar numărul
+maxim este 983 calatori pe zi
+-ȋn medie, 20% din zilele dintr-o lună sunt clasificate ca fiind lejere(mai puțin de 350
+de calatori pe zi), 50% ca fiind normale(ȋntre 351 și 670 calatori pe zi), iar 30% ca
+fiind aglomerate(peste 671 calatori pe zi).
+-prețul unui bilet este 3 lei și, ȋn medie, 74% din pasagerii care nu au abonament platesc
+biletul la utilizarea tramvaiului
+-prețul unui abonament este 70 lei pe lună și, ȋn medie, 38% din pasagerii care
+călătoresc cu tramvaiul ȋl achiziționează
+
+a) Generați, prin simulare, valori care să reprezinte numărul de călători dintr-o zi,
+pentru fiecare zi a lunii iunie 2024, respectȃnd restricțiile de mai sus și stocați
+valorile obținute ȋntr-un vector. Construiți histograma acestor valori.
+
+b) Repetați procedul de la a) pentru fiecare luna a unul 2024 și centralizați rezultatele
+empirice ȋntr-un dataframe care să conțină, pentru fiecare lună valorile medii,
+minime și maxime de călători, precum și procentul de zile lejere, normale și
+respectiv aglomerate ȋnregistrate.
+
+c) Completați dataframe-ul de la b) cu simularea nr de pasageri cu abonament, nr de
+pasageri care platesc bilet și respectiv număr de pasageri care nu plătesc bilet.
+Determinați pentru fiecare lună ȋn parte veniturile provenite din bilete și
+abonamente și respectiv, veniturile nerealizate prin neplata biletului de unii dintre
+pasageri. Organizați informația ȋntr-o manieră ușor de vizualizat.
+
+d) Un tramvai de pe linia lui 501 face 11 trasee complete ȋn timpul programului de
+lucru dintr-o zi. De două ori pe zi un controlor se urcă ȋn unul din tramvaie și solicită
+prezentarea biletelor de călătorie unui număr de pasageri, aleși ȋn mod aleator, după
+următorul algoritm:
+-dacă e o zi lejeră, verifică ȋn mod aleator ȋntre 2 și 11 persoane, dar se oprește din
+verificare dacă a amendat deja 3 persoane.
+-dacă e zi normală, verifică ȋn mod aleator un număr de persoane pȃnă reusește să
+amendeze 5 persoane(sau a verificat pe toata lumea prezentă ȋn tramvai ȋntre 2 stații)
+-dacă e o zi aglomerată, verifică ȋn mod aleator ȋntre 3 și 5 persoane și se oprește
+din verificare după prima amendă
+Știind că amenda este 50 lei, determinați, ȋn urma simulării, pentru fiecare zi a
+fiecarei luni din anul 2024, cȃți bani se strȃng din aplicarea unor amenzi. Comparați
+această sumă cu pierderea realizată prin neplata biletelor și stabiliți ȋn cȃte zile dintro lună(ȋn medie) sumele obținute din amenzi depășesc pierderea prin neplata
+biletelor, considerȃnd și faptul că pentru fiecare din cele 2 verificări zilnice există
+un cost asociat controlorului de 214 lei.
+
+e) Studiați prin simulare, oportunitatea de a introduce un al treilea control pe zi(ȋn
+condițiile menționate anterior, la care adaugam informația ca, ȋn medie, 30% din
+amenzile colectate la fiecare din controale nu sunt raportate oficial ci sunt păstrate
+de controlor).
